@@ -283,6 +283,7 @@ input[data-error]::after {
 .checkbox-input {
   display: none;
 }
+
 .checkbox-input:checked + .checkbox-label .checkbox-icon::after,
 .checkbox-input:checked + .checkbox2-label .checkbox-icon::after {
   opacity: 1;
@@ -294,6 +295,7 @@ input[data-error]::after {
   border-radius: 4px;
   border: 0;
   background: #c4c4c4;
+
 }
 .checkbox2-label .checkbox-icon::after {
   width: 7px;

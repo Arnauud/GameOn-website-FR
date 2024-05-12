@@ -36,8 +36,6 @@ let errorMessage = {
   lastName : "Veuillez entrer 2 caractères ou plus pour le champ du Nom",
   email : "Rentrez un e-mail valide",
   contestNumber : "Merci de bien vouloir indiquer un chiffre",
-  location : "Merci de bien vouloir choisir un lieu",
-  ToU : "Merci d'accpeter les conditions générales d'utilistation",
   dateOfBirth : "Merci de bien vouloir saisir votre date de naissance",
 };
 
@@ -164,39 +162,46 @@ function contestNumberValidation(){
 // (5) Un bouton radio est sélectionné.
 
 function locationButton(){
+  let locationError = document.querySelectorAll('label.checkbox-label .checkbox-icon');
   let locationButton = document.querySelectorAll('input[type="radio"]');
-for (let i = 0; i < locationButton.length; i++){
-  if(locationButton[i].checked){
-   locationisChecked = true
-   break;
-  } else {
-    locationisChecked = false
-  }
-}
+  for (let i = 0; i < locationButton.length; i++){
+    let locationCheck = locationButton[i];
 
-  if (locationisChecked){
-    console.log("location has been checked")
-  } else {
-    console.log(errorMessage.location)
-    locationisChecked = false
-  }
-};
+      if (locationCheck.checked){
+        IsChecked = true;
+        break;
+      }
+    }
+    if (!IsChecked) {
+      // Apply red border to all locationError elements
+      locationError.forEach(icon => {
+        icon.style.border = "2px solid red";
 
+      });
+    } else {
+      // Apply blue border to all locationError elements
+      locationError.forEach(icon => {
+        icon.style.border = "2px solid #279e7a";
+
+      });
+    }
+  }
 
 // (6) La case des conditions générales est cochée, l'autre case est facultative / peut être laissée décochée.
 function conditionAccepted(){
+  let conditionUsageError = document.querySelector('label[for="checkbox1"] .checkbox-icon');
   let conditionUsage = document.getElementById("checkbox1");
   let conditionPromo = document.getElementById("checkbox2");
+
   if (!conditionUsage.checked) {
-    conditionUsage.style.display = "block";
-    conditionUsage.textContent = errorMessage.ToU;
+    conditionUsageError.style.border = "2px red solid"
     conditionUsageCheck = false;
   } else if (conditionUsage.checked && conditionPromo.checked){
-    conditionUsage.style.display = "none";
+    conditionUsageError.style.border = ""
     console.log("Double win | Usage & Promotion");
     conditionUsageCheck = true;
   } else if (conditionUsage.checked && !conditionPromo.checked){
-    conditionUsage.style.display = "none";
+    conditionUsageError.style.border = ""
     console.log("Single Win | At least the took the Usage");
     conditionUsageCheck = true;
   }
@@ -205,8 +210,9 @@ function conditionAccepted(){
 
 
 function thankYou(){
-if (firstNameCheck && lastNameCheck && emailValidationCheck && contestNumberValidationCheck && locationisChecked && conditionUsageCheck && dateOfBirthCheck === true){
-  alert("Merci! Votre réservation a été reçue.")
+if (firstNameCheck === true){
+  let formValidationBtn = document.querySelector(".btn-submit, .button");
+  formValidationBtn.style.value = "Merci !"  
 } else {
   alert("Stuff needs to get worked out")
 }}
@@ -222,12 +228,12 @@ function formValidation (){
 
       // THESE ARE ALL THE FUNCTIONS TO PICK UP
       firstNameValidation(); 
-      lastNameValidation();
-      emailValidation();
-      contestNumberValidation();
-      dateOfBirth();
-      locationButton();
-      conditionAccepted();
+      // lastNameValidation();
+      // emailValidation();
+      // contestNumberValidation();
+      // dateOfBirth();
+      // locationButton();
+      // conditionAccepted();
       thankYou();
 
     });
@@ -240,3 +246,5 @@ function formValidation (){
   })
 
 
+  // if (firstNameCheck && lastNameCheck && emailValidationCheck && contestNumberValidationCheck && IsChecked && conditionUsageCheck && dateOfBirthCheck === true){
+  
