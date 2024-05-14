@@ -11,7 +11,11 @@ function editNav() {
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
-const modalClose = document.querySelector(".close") // issue number 1 = calling up the span.
+const modalClose = document.querySelector(".close"); // issue number 1 = calling up the span.
+
+const closePopUp = document.getElementsByClassName(".button-close"); // to close with the button
+const closePopUpX = document.getElementById("success-screen") // to close with the "x"
+
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -21,6 +25,11 @@ function launchModal() {
   modalbg.style.display = "block";
 }
 
+// ISSUE 4-5
+modalClose.addEventListener("click", closeLaunchModalPopUp) // upon a click to parameter closeModal function
+function closeLaunchModalPopUp (){ 
+  closePopUpX.style.display = "none"; 
+}
 
 // ISSUE #1 to CLOSE THE MODAL 
 
@@ -164,6 +173,7 @@ function contestNumberValidation(){
 function locationButton(){
   let locationError = document.querySelectorAll('label.checkbox-label .checkbox-icon');
   let locationButton = document.querySelectorAll('input[type="radio"]');
+  let IsChecked;
   for (let i = 0; i < locationButton.length; i++){
     let locationCheck = locationButton[i];
 
@@ -176,7 +186,7 @@ function locationButton(){
       // Apply red border to all locationError elements
       locationError.forEach(icon => {
         icon.style.border = "2px solid red";
-
+        console.log("false")
       });
     } else {
       // Apply blue border to all locationError elements
@@ -210,11 +220,15 @@ function conditionAccepted(){
 
 
 function thankYou(){
-if (firstNameCheck === true){
-  let formValidationBtn = document.querySelector(".btn-submit, .button");
-  formValidationBtn.style.value = "Merci !"  
+  let formValidationBtn = document.getElementById("success-screen");
+
+  if (firstNameCheck && lastNameCheck && emailValidationCheck && contestNumberValidationCheck && conditionUsageCheck && dateOfBirthCheck === true) {
+  closeLaunchModal ()
+  formValidationBtn.style.display = "block";
+ closePopUpX.addEventListener("click", closeLaunchModalPopUp)
+ closePopUp.addEventListener("click", closeLaunchModalPopUp)
 } else {
-  alert("Stuff needs to get worked out")
+  formValidationBtn.style.display = "none";
 }}
 
 
@@ -228,12 +242,12 @@ function formValidation (){
 
       // THESE ARE ALL THE FUNCTIONS TO PICK UP
       firstNameValidation(); 
-      // lastNameValidation();
-      // emailValidation();
-      // contestNumberValidation();
-      // dateOfBirth();
-      // locationButton();
-      // conditionAccepted();
+      lastNameValidation();
+      emailValidation();
+      contestNumberValidation();
+      dateOfBirth();
+      locationButton();
+      conditionAccepted();
       thankYou();
 
     });
